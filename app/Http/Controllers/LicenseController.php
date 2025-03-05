@@ -52,4 +52,21 @@ class LicenseController extends Controller
 
         return response()->json(['status' => 'active']);
     }
+
+    public function proses_ubah_status(Request $request)
+    {
+        $id = $request->id;
+        $status = $request->status;
+
+
+        License::where('id', $id)
+            ->update([
+                'status' => $status,
+            ]);
+
+        session()->flash('msg_status', 'success');
+        session()->flash('msg', "<h5>Berhasil</h5><p>Status Berhasil Diubah</p>");
+        return redirect()->to('/licenses-view');
+
+    }
 }
